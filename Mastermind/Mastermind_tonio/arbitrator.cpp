@@ -101,11 +101,13 @@ void arbitrator::manageGame()
 					std::string currentLine;
 					if(getline(m_streamKeys,currentLine) && !currentLine.empty())
 					{
-						std::cout << currentLine << " detected has next key from file." << std::endl; ;//debug
+						std::cout << currentLine << " detected as next key from file." << std::endl; ;//debug
 						foundAKey = true;
 						int value = atoi(currentLine.c_str());
 						int decomposed = value;
-						for(int i=0;i<m_nSecretSize;i++)
+						//Which endianness? if the number in the file is 123456 do we store it in an array like 123456 with 1 at index 0?
+						//for(int i=0;i<m_nSecretSize;i++)//fix the 742995 bug: reverse it?
+						for(int i=m_nSecretSize-1;i>=0;i--)//if so this is the fix
 						{
 							int digit = decomposed %10;
 							decomposed = decomposed / 10;
@@ -122,13 +124,13 @@ void arbitrator::manageGame()
 
 		////////////////guesser OPTION 1
 		//This works fine, average 10rounds and 0.44s per round!
-		//std::unique_ptr<Guesser> oracle;
-		//oracle.reset(new Guesser(m_nSecretSize, m_nMaxNumber));
+		std::unique_ptr<Guesser> oracle;
+		oracle.reset(new Guesser(m_nSecretSize, m_nMaxNumber));
 
 		////////////////guesser OPTION 2 
 		//This works awesome, average 7rounds but 55s per round!
-		std::unique_ptr<ChaoticGuesser> oracle;
-		oracle.reset(new ChaoticGuesser(m_nSecretSize, m_nMaxNumber, m_nChaos));
+		//std::unique_ptr<ChaoticGuesser> oracle;
+		//oracle.reset(new ChaoticGuesser(m_nSecretSize, m_nMaxNumber, m_nChaos));
 
 		std::vector<std::tr1::tuple<int, int>> arrayRB;//to improve chaos algorithm
 

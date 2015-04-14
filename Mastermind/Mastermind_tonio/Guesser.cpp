@@ -17,7 +17,8 @@ Guesser::Guesser(const int size, const int maxNumber):
 	m_nSecretSize(size),
 	m_nMaxNumber(maxNumber),
 	m_nRightlytPlaced(0),
-	m_bDebug(false)
+	m_bDebug(false),
+	m_bFeedback(true)
 {
 	m_rightlyPlaced = new int[m_nSecretSize];//R
 	for(int i=0;i<m_nSecretSize;i++)
@@ -86,7 +87,7 @@ int *Guesser::Try(void)
 		//It's possible to enumerate the permutations, like Heap's algorithm
 		int numberElementsToPlace = m_toPlace.size();
 		int numberPermutations = factorial(numberElementsToPlace);//todo, check that there isn't any overflow here :)
-		printf("Debug: we might have to shuffle, and there are just %d possibilities, trolol\n", numberPermutations);
+		printf("Debug: we might have to shuffle, and there are just %d possibilities, trolol\n", numberPermutations);//debug/stats
 		int* shuffleArray = new int[numberElementsToPlace];
 
 		//With Heap's algorithm we shuffle the last array we cooked!
@@ -168,7 +169,8 @@ void Guesser::Feedback(int nR, int nB)
 			if( m_rightlyPlaced[i]==-1 && m_tryArrays[lastLigne][i] != currentValue)
 			{
 				m_rightlyPlaced[i]=m_tryArrays[lastLigne][i];
-				printf("By 2nd deduction (nB being 0) we found that color %d lies in column %d\n",m_rightlyPlaced[i],i);
+				if(m_bFeedback)
+					printf("By 2nd deduction (nB being 0) we found that color %d lies in column %d\n",m_rightlyPlaced[i],i);
 			}
 		}
 		//When nB equals 0, there are no current value to place (until we had those of the current value tested like below)
@@ -185,7 +187,9 @@ void Guesser::Feedback(int nR, int nB)
 	bool alreadyAdded = (currentValue==m_nMaxNumber);//thanks to an optimization cf below
 	if(previousScore<currentScore && !alreadyAdded)
 	{
-		printf("there is/are %d occurrence(s) of: %d in secret\n",currentScore-previousScore,currentValue);
+		if(m_bFeedback)
+			printf("there is/are %d occurrence(s) of: %d in secret\n",currentScore-previousScore,currentValue);
+
 		for(int i=0;i<(currentScore-previousScore);i++)
 		{
 			m_toPlace.push_back(currentValue);
@@ -224,7 +228,8 @@ void Guesser::Feedback(int nR, int nB)
 		if(columnCandidates.size()==1)
 		{
 			//We will then remove it from misplaced, and add to rightly placed at the good spot
-			printf("By deduction we found that color %d lies in column %d\n",*it,columnCandidates.at(0));
+			if(m_bFeedback)
+				printf("By deduction we found that color %d lies in column %d\n",*it,columnCandidates.at(0));
 
 			if(m_rightlyPlaced[columnCandidates.at(0)]!= -1)
 			{
@@ -235,7 +240,7 @@ void Guesser::Feedback(int nR, int nB)
 
 			m_nRightlytPlaced++;
 
-			printf("DEBUG removing value %d at index %d\n",m_rightlyPlaced[columnCandidates.at(0)],columnCandidates.at(0));
+			//printf("DEBUG removing value %d at index %d\n",m_rightlyPlaced[columnCandidates.at(0)],columnCandidates.at(0));//debug
 			it = m_toPlace.erase(it);//this is fucking not recommended
 		}
 		//or we increment the iterator
@@ -249,7 +254,9 @@ void Guesser::Feedback(int nR, int nB)
 	if(currentValue+1==m_nMaxNumber)
 	{
 		int nFound = numberColorsFound();
-		printf("penultimate: there is/are %d occurrence(s) of: %d in secret\n",m_nSecretSize-nFound, m_nMaxNumber);
+		if(m_bFeedback)
+			printf("penultimate: there is/are %d occurrence(s) of: %d in secret\n",m_nSecretSize-nFound, m_nMaxNumber);
+
 		for(int i=0;i<(m_nSecretSize-nFound);i++)
 		{
 			m_toPlace.push_back(m_nMaxNumber);

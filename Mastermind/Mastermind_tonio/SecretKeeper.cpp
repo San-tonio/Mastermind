@@ -34,6 +34,16 @@ SecretKeeper::SecretKeeper(const int secretSize, const int maxNumber, const int*
 	{
 		m_Secret.get()[i] = Key[i];
 	}
+	bool totodebug = false;
+	if(totodebug)
+	{
+		std::cout << "Debug the code you'll be looking for is ";//debug cheat
+		for(int i = 0; i < secretSize; i++)
+		{
+			std::cout << m_Secret.get()[i];//debug cheat
+		}
+		std::cout << std::endl;//debug cheat
+	}
 }
 
 SecretKeeper::~SecretKeeper(void)

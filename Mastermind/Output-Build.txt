@@ -1,0 +1,27 @@
+﻿1>------ Build started: Project: Mastermind_tonio, Configuration: Debug Win32 ------
+1>Build started 11/03/2015 17:28:16.
+1>InitializeBuildStatus:
+1>  Creating "Debug\Mastermind_tonio.unsuccessfulbuild" because "AlwaysCreate" was specified.
+1>ClCompile:
+1>  All outputs are up-to-date.
+1>  Guesser.cpp
+1>  Generating Code...
+1>c:\users\admin\documents\projets_code\mastermind\mastermind_tonio\mastermind_tonio\guesser.cpp(80): warning C4715: 'Guesser::Try' : not all control paths return a value
+1>  Compiling...
+1>  Mastermind_tonio.cpp
+1>  Generating Code...
+1>ManifestResourceCompile:
+1>  All outputs are up-to-date.
+1>Manifest:
+1>  All outputs are up-to-date.
+1>LinkEmbedManifest:
+1>  All outputs are up-to-date.
+1>  Mastermind_tonio.vcxproj -> C:\Users\admin\Documents\Projets_code\Mastermind\Mastermind_tonio\Debug\Mastermind_tonio.exe
+1>FinalizeBuildStatus:
+1>  Deleting file "Debug\Mastermind_tonio.unsuccessfulbuild".
+1>  Touching "Debug\Mastermind_tonio.lastbuildstate".
+1>
+1>Build succeeded.
+1>
+1>Time Elapsed 00:00:04.19
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========

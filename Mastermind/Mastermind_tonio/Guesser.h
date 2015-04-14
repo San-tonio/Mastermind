@@ -21,6 +21,7 @@ private:
 
 	int m_nRightlytPlaced;
 	bool m_bDebug;
+	bool m_bFeedback;
 
 	int RplusB(int n);
 	int numberColorsFound();

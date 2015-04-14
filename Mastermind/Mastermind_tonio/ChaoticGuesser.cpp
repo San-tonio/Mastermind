@@ -80,7 +80,7 @@ int *ChaoticGuesser::Try(void)
 			printf("ERROR: detected that we tried all combinations already oO\n");
 
 		time(&tEnd);
-		printf("time to find a permutation = %f\n", difftime(tEnd, tBegin));
+		printf("time to find a permutation = %f\n", difftime(tEnd, tBegin));//for stats
 	}
 	else
 	{
@@ -117,7 +117,7 @@ int *ChaoticGuesser::Try(void)
 		m_nCurrentNumber = i;//no need to retry all the numbers we already checked
 
 		time(&tEnd);
-		printf("time to find a solution = %f\n", difftime(tEnd, tBegin));
+		printf("time to find a solution = %f\n", difftime(tEnd, tBegin));//stats
 	}
 	
 	debugArrays(currentTry);
